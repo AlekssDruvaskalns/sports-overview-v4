@@ -12,7 +12,9 @@ class OrganizationController extends Controller
      */
     public function index()
     {
+        // Load organizations with their related events and posts
         $organizations = Organization::with(['events', 'posts'])->get();
+
         return view('organization.index', compact('organizations'));
     }
 
@@ -44,11 +46,14 @@ class OrganizationController extends Controller
     public function show(Organization $organization)
     {
          // Retrieve related events and posts
-        $events = $organization->events;
-        $posts = $organization->posts;
+        // $events = $organization->events;
+        // $posts = $organization->posts;
 
-        // Pass the organization, events, and posts to the view
-        return view('organization.show', compact('organization', 'events', 'posts'));
+        // // Pass the organization, events, and posts to the view
+        // return view('organization.show', compact('organization', 'events', 'posts'));
+        $organization->load(['events', 'posts']);
+
+        return view('organization.show', compact('organization'));
     }
 
     /**

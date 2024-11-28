@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -21,7 +22,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        $organizations = Organization::all(); // Get all organizations
+        return view('post.create', compact('organizations'));
     }
 
     /**
@@ -33,7 +35,7 @@ class PostController extends Controller
         ([
             'title' => 'required',
             'content' => 'required',
-            
+            'organization_id' => 'nullable|exists:organizations,id',   
         ]);
 
         Post::create($request->all());
@@ -53,7 +55,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        $organizations = Organization::all(); // Get all organizations
+        return view('post.edit', compact('post', 'organizations'));
     }
 
     /**
@@ -65,6 +68,7 @@ class PostController extends Controller
         ([
             'title' => 'required',
             'content' => 'required',
+            'organization_id' => 'nullable|exists:organizations,id',
         ]);
 
         $post->update($request->all());

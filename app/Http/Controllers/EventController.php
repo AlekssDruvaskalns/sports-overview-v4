@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Organization;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -21,7 +22,8 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('event.create');
+        $organizations = Organization::all(); // Get all organizations
+        return view('event.create', compact('organizations'));
     }
 
     /**
@@ -34,6 +36,7 @@ class EventController extends Controller
             'name' => 'required',
             'date' => 'required|date',
             'location' => 'required',
+            'organization_id' => 'nullable|exists:organizations,id',
         ]);
 
         Event::create($request->all());
@@ -53,7 +56,8 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        return view('event.edit', compact('event'));
+        $organizations = Organization::all(); // Fetch all organizations
+        return view('event.edit', compact('event', 'organizations'));
     }
 
     /**
@@ -66,6 +70,7 @@ class EventController extends Controller
             'name' => 'required',
             'date' => 'required|date',
             'location' => 'required',
+            'organization_id' => 'nullable|exists:organizations,id',
         ]);
 
         $event->update($request->all());
