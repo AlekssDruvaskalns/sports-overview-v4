@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\OrganizationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,5 +19,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//Controllers
+Route::resource('events', EventController::class)->middleware(['auth']);
+Route::resource('posts', PostController::class)->middleware(['auth']);
+Route::resource('organizations', OrganizationController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';
