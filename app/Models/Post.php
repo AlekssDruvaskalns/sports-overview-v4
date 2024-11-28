@@ -10,4 +10,9 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = ['title', 'content'];
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 }

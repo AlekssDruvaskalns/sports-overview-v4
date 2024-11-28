@@ -10,4 +10,14 @@ class Organization extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

@@ -12,7 +12,8 @@ class OrganizationController extends Controller
      */
     public function index()
     {
-        //
+        $organizations = Organization::with(['events', 'posts'])->get();
+        return view('organization.index', compact('organizations'));
     }
 
     /**
@@ -20,7 +21,7 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        //
+        return view('organization.create');
     }
 
     /**
@@ -28,7 +29,13 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        Organization::create($request->all());
+
+        return redirect()->route('organizations.index')->with('success', 'Organization created successfully.');
     }
 
     /**
@@ -36,7 +43,12 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-        //
+         // Retrieve related events and posts
+        $events = $organization->events;
+        $posts = $organization->posts;
+
+        // Pass the organization, events, and posts to the view
+        return view('organization.show', compact('organization', 'events', 'posts'));
     }
 
     /**
@@ -44,7 +56,7 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        //
+        return view('organization.edit', compact('organization'));
     }
 
     /**
@@ -52,7 +64,13 @@ class OrganizationController extends Controller
      */
     public function update(Request $request, Organization $organization)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $organization->update($request->all());
+
+        return redirect()->route('organizations.index')->with('success', 'Organization updated successfully.');
     }
 
     /**
@@ -60,6 +78,7 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
-        //
+        $organization->delete();
+        return redirect()->route('organizations.index')->with('success', 'Organization deleted successfully.');
     }
 }
