@@ -38,8 +38,9 @@ class EventController extends Controller
             'location' => 'required',
             'organization_id' => 'nullable|exists:organizations,id',
         ]);
-
+        
         Event::create($request->all());
+        
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 
@@ -72,7 +73,7 @@ class EventController extends Controller
             'location' => 'required',
             'organization_id' => 'nullable|exists:organizations,id',
         ]);
-
+        
         $event->update($request->all());
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }

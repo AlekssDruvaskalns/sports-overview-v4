@@ -20,9 +20,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//nested route
+Route::resource('organizations.events', EventController::class);
+Route::resource('organizations.posts', PostController::class);
+
 //Controllers
 Route::resource('events', EventController::class)->middleware(['auth']);
 Route::resource('posts', PostController::class)->middleware(['auth']);
 Route::resource('organizations', OrganizationController::class)->middleware(['auth']);
+
 
 require __DIR__.'/auth.php';
