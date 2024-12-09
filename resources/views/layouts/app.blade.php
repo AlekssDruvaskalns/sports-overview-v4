@@ -16,7 +16,30 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            @include('layouts.navigation')
+            <!-- Navigation -->
+            <div class="bg-gray-800 text-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-center py-4">
+                        <div>
+                            <a href="{{ route('dashboard') }}" class="text-lg font-semibold hover:text-yellow-500">Dashboard</a>
+                        </div>
+                        <nav class="space-x-4 flex items-center">
+                            <a href="{{ route('organizations.index') }}" class="hover:text-yellow-500">Organizations</a>
+                            <a href="{{ route('events.index') }}" class="hover:text-yellow-500">Events</a>
+                            <a href="{{ route('posts.index') }}" class="hover:text-yellow-500">Posts</a>
+
+                            <!-- Logout Link -->
+                            <form method="POST" action="{{ route('logout') }}" class="inline">
+                                @csrf
+                                <button type="submit" 
+                                        class="text-white hover:text-yellow-500">
+                                    Logout
+                                </button>
+                            </form>
+                        </nav>
+                    </div>
+                </div>
+            </div>
 
             <!-- Page Heading -->
             @isset($header)
