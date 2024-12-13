@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organization;
+use App\Models\Sport;
 use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
@@ -10,12 +11,18 @@ class OrganizationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Sport $sport = null)
     {
-        // Load organizations with their related events and posts
-        $organizations = Organization::with(['events', 'posts'])->get();
+        if ($sport) {
+            // Load organizations for a specific sport
+            $organizations = Organization::where('sport_id', $sport->id)->with(['events', 'posts'])->get();
+        } else {
+            // Load all organizations with their related events and posts
+            $organizations = Organization::with(['events', 'posts'])->get();
+        }
+    
+        return view('organization.index', compact('organizations', 'sport'));
 
-        return view('organization.index', compact('organizations'));
     }
 
     /**
@@ -23,7 +30,8 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        return view('organization.create');
+        $sports = Sport::all(); // Fetch all sports
+        return view('organization.create', compact('sports'));
     }
 
     /**
@@ -33,6 +41,7 @@ class OrganizationController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'sport_id' => 'required|exists:sports,id',
         ]);
 
         Organization::create($request->all());
@@ -61,7 +70,8 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
-        return view('organization.edit', compact('organization'));
+        $sports = Sport::all();
+        return view('organization.edit', compact('organization', 'sports'));
     }
 
     /**
@@ -71,6 +81,7 @@ class OrganizationController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'sport_id' => 'required|exists:sports,id',
         ]);
 
         $organization->update($request->all());

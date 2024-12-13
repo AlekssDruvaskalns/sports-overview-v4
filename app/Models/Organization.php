@@ -9,7 +9,7 @@ class Organization extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'sport_id'];
 
     public function events()
     {
@@ -19,5 +19,10 @@ class Organization extends Model
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function sport()
+    {
+        return $this->belongsTo(Sport::class);
     }
 }

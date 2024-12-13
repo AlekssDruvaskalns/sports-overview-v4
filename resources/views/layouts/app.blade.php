@@ -24,8 +24,16 @@
                             <a href="{{ route('dashboard') }}" class="text-lg font-semibold hover:text-yellow-500">Dashboard</a>
                         </div>
                         <nav class="space-x-4 flex items-center">
+                            <!-- Sports Link -->
+                            <a href="{{ route('sports.index') }}" class="hover:text-yellow-500">Sports</a>
+
+                            <!-- Organizations Link -->
                             <a href="{{ route('organizations.index') }}" class="hover:text-yellow-500">Organizations</a>
+
+                            <!-- Events Link -->
                             <a href="{{ route('events.index') }}" class="hover:text-yellow-500">Events</a>
+
+                            <!-- Posts Link -->
                             <a href="{{ route('posts.index') }}" class="hover:text-yellow-500">Posts</a>
 
                             <!-- Logout Link -->
