@@ -13,8 +13,8 @@ class Sport extends Model
         return $this->hasMany(Organization::class);
     }
 
-    // public function athletes()
-    // {
-    //     return $this->hasMany(Athlete::class);
-    // }
+    public function athletes()
+    {
+        return $this->hasMany(Athlete::class);
+    }
 }

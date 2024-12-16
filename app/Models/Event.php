@@ -16,3 +16,6 @@ class Event extends Model
         return $this->belongsTo(Organization::class);
     }
 }
+
+
+
