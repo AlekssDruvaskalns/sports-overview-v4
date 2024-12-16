@@ -21,6 +21,7 @@
                     <p class="text-gray-500">No organizations found for this sport.</p>
                 @endif
 
+                <!-- Buttons -->
                 <div class="mt-4 flex justify-between">
                     <a href="{{ route('sports.show', $sport->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Show Organizations
@@ -28,14 +29,18 @@
                     <a href="{{ route('sports.organizations.index', $sport->id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                         All Events and Posts
                     </a>
+                    <a href="{{ route('sports.athletes.index', $sport->id) }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                        Show Athletes
+                    </a>
                 </div>
             </div>
         @endforeach
 
         <div class="text-center mt-8">
-        <a href="{{ route('organizations.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded">
+            <a href="{{ route('organizations.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded">
                 View All Organizations
             </a>
+            
         </div>
     </div>
 </x-app-layout>

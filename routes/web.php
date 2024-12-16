@@ -27,6 +27,7 @@ Route::resource('organizations.events', EventController::class);
 Route::resource('organizations.posts', PostController::class);
 Route::get('/sports/{sport}/organizations', [OrganizationController::class, 'index'])->name('sports.organizations.index');
 Route::resource('sports.athletes', AthleteController::class);
+Route::get('/sports/{sport}/athletes', [AthleteController::class, 'index'])->name('sports.athletes.index');
 
 //Controllers
 Route::resource('events', EventController::class)->middleware(['auth']);

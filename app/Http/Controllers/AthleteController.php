@@ -11,10 +11,20 @@ class AthleteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, Sport $sport = null)
     {
-        $athletes = Athlete::with('sport')->get();
-        return view('athlete.index', compact('athletes'));
+        // $athletes = Athlete::with('sport')->get();
+        // return view('athlete.index', compact('athletes'));
+
+        if ($sport) {
+            // Filter athletes by sport_id
+            $athletes = Athlete::where('sport_id', $sport->id)->with('sport')->get();
+        } else {
+            // Load all athletes with their sport relationship
+            $athletes = Athlete::with('sport')->get();
+        }
+    
+        return view('athlete.index', compact('athletes', 'sport'));
     }
 
     /**
@@ -38,6 +48,7 @@ class AthleteController extends Controller
             'nationality' => 'required|string|max:255',
             'height' => 'required|numeric|min:0|max:3',
             'sport_id' => 'required|exists:sports,id',
+            'sport_attributes' => 'nullable|array',
         ]);
 
         Athlete::create($validated);
@@ -74,6 +85,7 @@ class AthleteController extends Controller
             'nationality' => 'required|string|max:255',
             'height' => 'required|numeric|min:0|max:3',
             'sport_id' => 'required|exists:sports,id',
+            'sport_attributes' => 'nullable|array',
         ]);
 
         Athlete::create($validated);

@@ -36,6 +36,9 @@
                             <!-- Posts Link -->
                             <a href="{{ route('posts.index') }}" class="hover:text-yellow-500">Posts</a>
 
+                            <!-- Athletes Link -->
+                            <a href="{{ route('athlete.index') }}" class="hover:text-yellow-500">Athletes</a>
+
                             <!-- Logout Link -->
                             <form method="POST" action="{{ route('logout') }}" class="inline">
                                 @csrf
