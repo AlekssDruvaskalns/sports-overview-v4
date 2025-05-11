@@ -31,17 +31,27 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate
-        ([
-            'name' => 'required',
-            'date' => 'required|date',
-            'location' => 'required',
-            'organization_id' => 'nullable|exists:organizations,id',
+        $request->validate([
+        'name' => 'required',
+        'date' => 'required|date',
+        'location' => 'required',
+        'organization_id' => 'nullable|exists:organizations,id',
+        'fights.*.fighter_one' => 'required|string',
+        'fights.*.fighter_two' => 'required|string',
+    ]);
+        
+        $event = Event::create($request->only(['name', 'date', 'location', 'organization_id']));
+
+        foreach ($request->input('fights', []) as $index => $fightData) {
+        $event->fights()->create([
+            'fighter_one' => $fightData['fighter_one'],
+            'fighter_two' => $fightData['fighter_two'],
+            'weight_class' => $fightData['weight_class'] ?? null,
+            'order' => $index,
         ]);
+    }
         
-        Event::create($request->all());
-        
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+        return redirect()->route('events.index')->with('success', 'Event with fights created successfully.');
     }
 
     /**
@@ -49,8 +59,9 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return view('event.show', compact('event'));
-    }
+    $event->load('fights');
+    return view('event.show', compact('event'));
+    }   
 
     /**
      * Show the form for editing the specified resource.
@@ -66,15 +77,42 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        $request->validate
-        ([
-            'name' => 'required',
-            'date' => 'required|date',
-            'location' => 'required',
-            'organization_id' => 'nullable|exists:organizations,id',
-        ]);
+        $request->validate([
+        'name' => 'required',
+        'date' => 'required|date',
+        'location' => 'required',
+        'organization_id' => 'nullable|exists:organizations,id',
+        'fights.*.fighter_one' => 'required|string',
+        'fights.*.fighter_two' => 'required|string',
+    ]);
         
-        $event->update($request->all());
+    $event->update($request->only(['name', 'date', 'location', 'organization_id']));
+
+    // Sync or create/update fights
+    foreach ($request->input('fights', []) as $fightData) {
+        if (isset($fightData['id'])) {
+            // Update existing fight
+            \App\Models\Fight::where('id', $fightData['id'])->update([
+                'fighter_one' => $fightData['fighter_one'],
+                'fighter_two' => $fightData['fighter_two'],
+                'weight_class' => $fightData['weight_class'] ?? null,
+            ]);
+        } else {
+        // Create new fight
+            $event->fights()->create([
+                'fighter_one' => $fightData['fighter_one'],
+                'fighter_two' => $fightData['fighter_two'],
+                'weight_class' => $fightData['weight_class'] ?? null,
+                'order' => 0,
+            ]);
+        }
+    }
+    // Delete removed fights
+    if ($request->deleted_fights) {
+        $idsToDelete = explode(',', $request->deleted_fights);
+        \App\Models\Fight::whereIn('id', $idsToDelete)->delete();
+    }
+
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 

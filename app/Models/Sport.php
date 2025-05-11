@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sport extends Model
 {
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'slug'];
 
     public function organizations()
     {
@@ -17,4 +17,10 @@ class Sport extends Model
     {
         return $this->hasMany(Athlete::class);
     }
+
+    public function getRouteKeyName()
+    {
+    return 'slug';
+    }
+
 }

@@ -16,41 +16,60 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-            <!-- Navigation -->
-            <div class="bg-gray-800 text-white">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between items-center py-4">
-                        <div>
-                            <a href="{{ route('dashboard') }}" class="text-lg font-semibold hover:text-yellow-500">Dashboard</a>
-                        </div>
-                        <nav class="space-x-4 flex items-center">
-                            <!-- Sports Link -->
-                            <a href="{{ route('sports.index') }}" class="hover:text-yellow-500">Sports</a>
-
-                            <!-- Organizations Link -->
-                            <a href="{{ route('organizations.index') }}" class="hover:text-yellow-500">Organizations</a>
-
-                            <!-- Events Link -->
-                            <a href="{{ route('events.index') }}" class="hover:text-yellow-500">Events</a>
-
-                            <!-- Posts Link -->
-                            <a href="{{ route('posts.index') }}" class="hover:text-yellow-500">Posts</a>
-
-                            <!-- Athletes Link -->
-                            <a href="{{ route('athlete.index') }}" class="hover:text-yellow-500">Athletes</a>
-
-                            <!-- Logout Link -->
-                            <form method="POST" action="{{ route('logout') }}" class="inline">
-                                @csrf
-                                <button type="submit" 
-                                        class="text-white hover:text-yellow-500">
-                                    Logout
-                                </button>
-                            </form>
-                        </nav>
-                    </div>
-                </div>
+<!-- Navigation -->
+<nav class="bg-black text-white border-b border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center py-4">
+            <!-- Home -->
+            <div>
+                <a href="{{ route('sports.index') }}"
+                   class="{{ request()->routeIs('sports.index') ? 'text-red-500 border-b-2 border-red-500' : 'hover:border-b-2 hover:border-red-500' }} text-lg font-semibold pb-1 transition">
+                    Home
+                </a>
             </div>
+
+            <!-- Sport Categories -->
+            <nav class="space-x-6 flex items-center text-sm font-medium">
+                <a href="{{ route('sports.show', 'mma') }}"
+                   class="{{ request()->is('sports/mma*') ? 'text-red-500 border-b-2 border-red-500' : 'hover:border-b-2 hover:border-red-500' }} pb-1 transition">
+                    MMA
+                </a>
+
+                <a href="{{ route('sports.show', 'basketball') }}"
+                   class="{{ request()->is('sports/basketball*') ? 'text-red-500 border-b-2 border-red-500' : 'hover:border-b-2 hover:border-red-500' }} pb-1 transition">
+                    Basketball
+                </a>
+
+                <a href="{{ route('sports.show', 'boxing') }}"
+                   class="{{ request()->is('sports/boxing*') ? 'text-red-500 border-b-2 border-red-500' : 'hover:border-b-2 hover:border-red-500' }} pb-1 transition">
+                    Boxing
+                </a>
+
+                <a href="{{ route('sports.show', 'football') }}"
+                   class="{{ request()->is('sports/football*') ? 'text-red-500 border-b-2 border-red-500' : 'hover:border-b-2 hover:border-red-500' }} pb-1 transition">
+                    Football
+                </a>
+
+                <a href="{{ route('events.index') }}"
+                class="{{ request()->routeIs('events.*') ? 'text-red-500 border-b-2 border-red-500' : 'hover:border-b-2 hover:border-red-500' }} pb-1 transition">
+                Events
+                </a>
+            </nav>
+
+            <!-- Logout -->
+            <div>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                            class="text-white hover:border-b-2 hover:border-red-500 pb-1 transition">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</nav>
+
 
             <!-- Page Heading -->
             @isset($header)

@@ -15,6 +15,11 @@ class Event extends Model
     {
         return $this->belongsTo(Organization::class);
     }
+
+    public function fights()
+    {
+        return $this->hasMany(Fight::class);
+    }
 }
 
 
