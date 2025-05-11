@@ -17,7 +17,7 @@ class OrganizationController extends Controller
             // Load organizations for a specific sport
             $organizations = Organization::where('sport_id', $sport->id)->with(['events', 'posts'])->get();
         } else {
-            // Load all organizations with their related events and posts
+            // Load all organizations with events and posts
             $organizations = Organization::with(['events', 'posts'])->get();
         }
     
@@ -30,7 +30,7 @@ class OrganizationController extends Controller
      */
     public function create()
     {
-        $sports = Sport::all(); // Fetch all sports
+        $sports = Sport::all();
         return view('organization.create', compact('sports'));
     }
 
@@ -54,11 +54,11 @@ class OrganizationController extends Controller
      */
     public function show(Organization $organization)
     {
-         // Retrieve related events and posts
+
         // $events = $organization->events;
         // $posts = $organization->posts;
 
-        // // Pass the organization, events, and posts to the view
+        
         // return view('organization.show', compact('organization', 'events', 'posts'));
         $organization->load(['events', 'posts']);
 

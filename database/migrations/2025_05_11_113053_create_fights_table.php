@@ -17,7 +17,7 @@ return new class extends Migration
         $table->string('fighter_one');
         $table->string('fighter_two');
         $table->string('weight_class')->nullable();
-        $table->integer('order')->default(0); // display order
+        $table->integer('order')->default(0);
         $table->timestamps();
     });
     }

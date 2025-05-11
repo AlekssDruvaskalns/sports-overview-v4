@@ -7,7 +7,7 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Basic Info --}}
+                <!-- Basic info -->
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-bold mb-2">Name:</label>
                     <input type="text" id="name" name="name" value="{{ $event->name }}" required
@@ -40,7 +40,7 @@
                     </select>
                 </div>
 
-                {{-- Fight Card Editing --}}
+                <!-- Fight card edit -->
                 <h2 class="text-xl font-bold text-gray-800 mb-2">Fight Card</h2>
                 <div id="fights" class="space-y-4 mb-4">
                     @foreach ($event->fights as $i => $fight)
@@ -58,7 +58,7 @@
                     @endforeach
                 </div>
 
-                {{-- Hidden field to track deleted fights --}}
+                <!-- Hidden field track deleted fights -->
                 <input type="hidden" name="deleted_fights" id="deletedFights" value="">
 
                 <div class="mb-6">

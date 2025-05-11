@@ -12,7 +12,7 @@ class SportController extends Controller
      */
     public function index()
     {
-        // Fetch all sports with their organizations
+        
         $sports = Sport::with('organizations')->get();
 
         return view('sport.index', compact('sports'));

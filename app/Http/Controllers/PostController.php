@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $organizations = Organization::all(); // Get all organizations
+        $organizations = Organization::all();
         return view('post.create', compact('organizations'));
     }
 
@@ -55,7 +55,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $organizations = Organization::all(); // Get all organizations
+        $organizations = Organization::all();
         return view('post.edit', compact('post', 'organizations'));
     }
 

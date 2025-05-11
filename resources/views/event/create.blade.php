@@ -5,7 +5,7 @@
         <div class="bg-gray-100 p-6 rounded-lg shadow-lg max-w-md mx-auto">
             <form action="{{ route('events.store') }}" method="POST">
                 @csrf
-                {{-- Event Info --}}
+                <!-- Event info -->
     <div class="mb-4">
         <label for="name" class="block text-gray-700 font-bold mb-2">Name:</label>
         <input type="text" id="name" name="name" required
@@ -34,7 +34,7 @@
         </select>
     </div>
 
-    {{-- Fight Card Section --}}
+    <!-- Fight card section -->
     <h2 class="text-xl font-bold text-gray-800 mb-2">Fight Card</h2>
     <div id="fights" class="space-y-4 mb-4">
         <div class="fight-pair flex flex-wrap gap-2 items-center">

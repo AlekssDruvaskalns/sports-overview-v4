@@ -68,7 +68,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        $organizations = Organization::all(); // Fetch all organizations
+        $organizations = Organization::all();
         return view('event.edit', compact('event', 'organizations'));
     }
 
@@ -88,10 +88,10 @@ class EventController extends Controller
         
     $event->update($request->only(['name', 'date', 'location', 'organization_id']));
 
-    // Sync or create/update fights
+    // create/update fights
     foreach ($request->input('fights', []) as $fightData) {
         if (isset($fightData['id'])) {
-            // Update existing fight
+            // Update fight
             \App\Models\Fight::where('id', $fightData['id'])->update([
                 'fighter_one' => $fightData['fighter_one'],
                 'fighter_two' => $fightData['fighter_two'],

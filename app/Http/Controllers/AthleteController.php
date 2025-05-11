@@ -17,10 +17,10 @@ class AthleteController extends Controller
         // return view('athlete.index', compact('athletes'));
 
         if ($sport) {
-            // Filter athletes by sport_id
+            
             $athletes = Athlete::where('sport_id', $sport->id)->with('sport')->get();
         } else {
-            // Load all athletes with their sport relationship
+            
             $athletes = Athlete::with('sport')->get();
         }
     
