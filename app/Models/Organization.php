@@ -25,4 +25,10 @@ class Organization extends Model
     {
         return $this->belongsTo(Sport::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
 }

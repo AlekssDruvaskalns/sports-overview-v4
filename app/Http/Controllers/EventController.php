@@ -124,4 +124,18 @@ class EventController extends Controller
         $event->delete();
         return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
     }
+
+    public function toggleFavorite(Event $event)
+    {
+        $user = auth()->user();
+
+        if ($user->favoriteEvents->contains($event->id)) {
+        $user->favoriteEvents()->detach($event->id);
+        } else {
+        $user->favoriteEvents()->attach($event->id);
+        }
+
+        return back()->with('status', 'Updated saved events.');
+    }
+
 }

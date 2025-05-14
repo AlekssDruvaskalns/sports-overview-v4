@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'role' //added attribute
@@ -67,5 +68,15 @@ class User extends Authenticatable
     public function isUser(): bool
     {
         return $this->role === 'user';
+    }
+
+    public function account()
+    {
+        return $this->hasOne(Account::class);
+    }
+
+    public function favoriteEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_user')->withTimestamps();
     }
 }

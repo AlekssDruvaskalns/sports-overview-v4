@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\AthleteController;
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,20 +18,28 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    //existing accounts
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //For new accounts
+    Route::get('/account', [AccountController::class, 'show'])->name('account.show');
+    Route::patch('/account', [AccountController::class, 'update'])->name('account.update');
 });
 
 //nested route
 Route::resource('organizations.events', EventController::class);
-Route::resource('organizations.posts', PostController::class);
+// Route::resource('organizations.posts', PostController::class);
 Route::get('/sports/{sport}/organizations', [OrganizationController::class, 'index'])->name('sports.organizations.index');
-Route::resource('sports.athletes', AthleteController::class);
-Route::get('/sports/{sport}/athletes', [AthleteController::class, 'index'])->name('sports.athletes.index');
+// Route::resource('sports.athletes', AthleteController::class);
+// Route::get('/sports/{sport}/athletes', [AthleteController::class, 'index'])->name('sports.athletes.index');
 
 //Controllers
 Route::resource('events', EventController::class)->middleware(['auth']);
+Route::post('/events/{event}/favorite', [EventController::class, 'toggleFavorite'])
+    ->middleware(['auth'])
+    ->name('events.toggleFavorite');
 Route::resource('posts', PostController::class)->middleware(['auth']);
 Route::resource('organizations', OrganizationController::class)->middleware(['auth']);
 Route::resource('athlete', AthleteController::class);

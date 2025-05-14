@@ -32,27 +32,17 @@
                             <p class="text-gray-500">No events found for this organization.</p>
                         @endif
 
-                        <!-- Posts -->
-                        <p class="mt-4"><strong>Posts:</strong></p>
-                        @if ($organization->posts->isNotEmpty())
-                            <ul class="ml-4 list-disc">
-                                @foreach ($organization->posts as $post)
-                                    <li>{{ $post->title }}</li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="text-gray-500">No posts found for this organization.</p>
-                        @endif
-
                         <!-- Actions -->
                         <div class="mt-4 space-x-2">
-                            <a href="{{ route('organizations.show', $organization->id) }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{ route('organizations.show', $organization->slug) }}"
+                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                 Show
                             </a>
-                            <a href="{{ route('organizations.edit', $organization->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
+                            <a href="{{ route('organizations.edit', $organization->slug) }}"
+                               class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                                 Edit
                             </a>
-                            <form action="{{ route('organizations.destroy', $organization->id) }}" method="POST" class="inline-block">
+                            <form action="{{ route('organizations.destroy', $organization->slug) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
@@ -65,7 +55,7 @@
             </ul>
         </div>
 
-        <!-- Back to Sports Button (Visible When Filtering by Sport) -->
+        <!-- Back to Sports Button -->
         @if ($sport)
             <div class="mt-6 text-center">
                 <a href="{{ route('sports.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">

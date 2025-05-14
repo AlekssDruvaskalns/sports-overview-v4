@@ -20,6 +20,12 @@ class Event extends Model
     {
         return $this->hasMany(Fight::class);
     }
+
+    public function favoredBy()
+    {
+        return $this->belongsToMany(User::class, 'event_user')->withTimestamps();
+    }
+
 }
 
 

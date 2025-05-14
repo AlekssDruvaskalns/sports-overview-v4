@@ -10,16 +10,21 @@
                     @foreach ($sport->organizations as $organization)
                         <li class="bg-white p-4 rounded-lg shadow-md">
                             <h3 class="text-xl font-bold">{{ $organization->name }}</h3>
-                            <a href="{{ route('sports.organizations.index', $sport->id) }}" class="text-blue-500 hover:underline">
-                                View All Organizations
-                            </a>
+
+                            <div class="mt-4">
+                                <a href="{{ route('organizations.show', $organization->slug) }}"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+                                    View All Events
+                                </a>
+                            </div>
                         </li>
                     @endforeach
                 </ul>
             @else
-                <p class="text-gray-500">No organizations found for this sport.</p>
+                <p class="text-gray-500">No events found for this organization.</p>
             @endif
-        </div>
+
+
 
         <div class="mt-6 text-center">
             <a href="{{ route('sports.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">

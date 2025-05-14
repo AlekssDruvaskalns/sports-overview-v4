@@ -12,8 +12,8 @@
                         <ul class="list-disc ml-6 space-y-2 text-gray-300">
                             @foreach ($sport->organizations as $organization)
                                 <li>
-                                    <a href="{{ route('organizations.show', $organization->id) }}"
-                                       class="text-blue-300 hover:text-white hover:underline">
+                                    <a href="{{ route('organizations.show', $organization->slug) }}"
+                                        class="text-blue-300 hover:text-white hover:underline">
                                         {{ $organization->name }}
                                     </a>
                                 </li>
@@ -22,32 +22,15 @@
                     @else
                         <p class="text-gray-500">No organizations found for this sport.</p>
                     @endif
-
-                    <!-- Action Buttons -->
-                    <div class="mt-4 flex flex-wrap gap-4">
-                        <a href="{{ route('sports.show', $sport->slug) }}"
-                           class="bg-white text-black font-bold py-2 px-4 rounded shadow transition duration-300 ease-in-out transform hover:bg-gray-200 hover:scale-105 hover:shadow-xl">
-                            Show Organizations
-                        </a>
-
-                        <a href="{{ route('sports.organizations.index', $sport->slug) }}"
-                           class="bg-white text-black font-bold py-2 px-4 rounded shadow transition duration-300 ease-in-out transform hover:bg-gray-200 hover:scale-105 hover:shadow-xl">
-                            All Events and Posts
-                        </a>
-
-                        <a href="{{ route('sports.athletes.index', $sport->slug) }}"
-                           class="bg-white text-black font-bold py-2 px-4 rounded shadow transition duration-300 ease-in-out transform hover:bg-gray-200 hover:scale-105 hover:shadow-xl">
-                            Show Athletes
-                        </a>
-                    </div>
                 </div>
             @endforeach
 
             <div class="text-center mt-8">
-                <a href="{{ route('organizations.index') }}"
-                   class="bg-white text-black font-bold py-2 px-6 rounded shadow transition duration-300 ease-in-out transform hover:bg-gray-200 hover:scale-105 hover:shadow-xl">
-                    View All Organizations
+                <a href="{{ route('events.index') }}"
+                    class="bg-white text-black font-bold py-2 px-6 rounded shadow transition duration-300 ease-in-out transform hover:bg-gray-200 hover:scale-105 hover:shadow-xl">
+                    View All Events
                 </a>
+
             </div>
         </div>
     </div>
